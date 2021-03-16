@@ -17,7 +17,7 @@ const networks: Record<string, LocalNetworkConfig> = {
       ethereum: "terra10a29fyas9768pw8mewdrar3kzr07jz8f3n73t3",
       bsc: "terra1paav7jul3dzwzv78j0k59glmevttnkfgmgzv2r",
     },
-    limitOrder: "terra1x97rdc6avqcxrvpzerw26u2f3vur2dvpyl0y4c",
+    limitOrder: "terra1vc4ch0z3n6c23f9uywzy5yqaj2gmpnam8qgge7",
     fee: { gasPrice: 0.15, amount: 150000 }, // 0.150000 UST
   },
   moonshine: {
