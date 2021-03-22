@@ -12,7 +12,13 @@ export const getBadge = (type: string) => {
   const group: Dictionary<string[]> = {
     Terra: ["TERRA_SEND", "TERRA_RECEIVE", "TERRA_SWAP"],
 
-    Trade: ["BUY", "SELL"],
+    Trade: [
+      "BUY",
+      "SELL",
+      "BID_LIMIT_ORDER",
+      "EXECUTE_LIMIT_ORDER",
+      "ASK_LIMIT_ORDER",
+    ],
     Mint: [
       "OPEN_POSITION",
       "DEPOSIT_COLLATERAL",
@@ -43,16 +49,29 @@ const useParseTx = ({ type, data, token }: Tx) => {
   const formatToken = (asset?: Asset) =>
     formatAsset(asset?.amount, getSymbol(asset?.token))
 
+  /* terra: swap */
+  const offer = splitTokenText(data.offer)
+  const swap = splitTokenText(data.swapCoin)
+
+  /* mint */
   const collateral = splitTokenText(data.collateralAmount)
   const deposit = splitTokenText(data.depositAmount)
   const withdraw = splitTokenText(data.withdrawAmount)
   const mint = splitTokenText(data.mintAmount)
   const burn = splitTokenText(data.burnAmount)
+
+  /* pool */
   const assets = parseTokenText(data.assets)
   const refund = parseTokenText(data.refundAssets)
-  const offer = splitTokenText(data.offer)
-  const swap = splitTokenText(data.swapCoin)
+
+  /* liquidation */
   const liquidated = splitTokenText(data.liquidatedAmount)
+
+  /* limit order */
+  const askLimitOrder = splitTokenText(data.askAsset)
+  const offerLimitOrder = splitTokenText(data.offerAsset)
+  const bidderReceiveLimitOrder = splitTokenText(data.bidderReceive)
+  const executorReceiveLimitOrder = splitTokenText(data.executorReceive)
 
   const parser: Dictionary<ReactNode[]> = {
     /* Terra */
@@ -79,6 +98,24 @@ const useParseTx = ({ type, data, token }: Tx) => {
       formatAsset(offerAmount, getSymbol(offerAsset)),
       "for",
       formatAsset(returnAmount, getSymbol(askAsset)),
+    ],
+    BID_LIMIT_ORDER: [
+      "Asked",
+      formatToken(askLimitOrder),
+      "offered",
+      formatToken(offerLimitOrder),
+    ],
+    ASK_LIMIT_ORDER: [
+      "Asked",
+      formatToken(askLimitOrder),
+      "offered",
+      formatToken(offerLimitOrder),
+    ],
+    EXECUTE_LIMIT_ORDER: [
+      "Bidder received",
+      formatToken(bidderReceiveLimitOrder),
+      "executer received",
+      formatToken(executorReceiveLimitOrder),
     ],
 
     /* Mint */
