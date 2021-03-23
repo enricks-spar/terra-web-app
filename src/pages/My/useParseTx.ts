@@ -18,6 +18,7 @@ export const getBadge = (type: string) => {
       "BID_LIMIT_ORDER",
       "EXECUTE_LIMIT_ORDER",
       "ASK_LIMIT_ORDER",
+      "CANCEL_LIMIT_ORDER",
     ],
     Mint: [
       "OPEN_POSITION",
@@ -72,6 +73,8 @@ const useParseTx = ({ type, data, token }: Tx) => {
   const offerLimitOrder = splitTokenText(data.offerAsset)
   const bidderReceiveLimitOrder = splitTokenText(data.bidderReceive)
   const executorReceiveLimitOrder = splitTokenText(data.executorReceive)
+  const limitOrderType =
+    bidderReceiveLimitOrder.token === "uusd" ? "SELL" : "BUY"
 
   const parser: Dictionary<ReactNode[]> = {
     /* Terra */
@@ -100,23 +103,32 @@ const useParseTx = ({ type, data, token }: Tx) => {
       formatAsset(returnAmount, getSymbol(askAsset)),
     ],
     BID_LIMIT_ORDER: [
-      "Asked",
+      "Order to buy",
       formatToken(askLimitOrder),
-      "offered",
+      "with",
       formatToken(offerLimitOrder),
     ],
     ASK_LIMIT_ORDER: [
-      "Asked",
-      formatToken(askLimitOrder),
-      "offered",
+      "Order to sell",
       formatToken(offerLimitOrder),
+      "with",
+      formatToken(askLimitOrder),
     ],
-    EXECUTE_LIMIT_ORDER: [
-      "Bidder received",
-      formatToken(bidderReceiveLimitOrder),
-      "executer received",
-      formatToken(executorReceiveLimitOrder),
-    ],
+    EXECUTE_LIMIT_ORDER: {
+      BUY: [
+        "Bought",
+        formatToken(bidderReceiveLimitOrder),
+        "with",
+        formatToken(executorReceiveLimitOrder),
+      ],
+      SELL: [
+        "Sold",
+        formatToken(bidderReceiveLimitOrder),
+        "for",
+        formatToken(executorReceiveLimitOrder),
+      ],
+    }[limitOrderType],
+    CANCEL_LIMIT_ORDER: ["Canceled limit order ID", data.orderId],
 
     /* Mint */
     OPEN_POSITION: [
