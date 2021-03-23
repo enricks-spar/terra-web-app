@@ -344,8 +344,8 @@ const TradeForm = ({ type, tab }: { type: Type; tab: Tab }) => {
       }[type]
 
   const limitOrderValue = {
-    [Type.BUY]: times(target, amount1),
-    [Type.SELL]: times(target, amount2),
+    [Type.BUY]: times(target, amount2),
+    [Type.SELL]: times(target, amount1),
   }[type]
 
   const isLimitOrderValueEnough = gt(limitOrderValue, 1e6)
