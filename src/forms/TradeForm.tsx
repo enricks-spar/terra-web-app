@@ -343,12 +343,25 @@ const TradeForm = ({ type, tab }: { type: Type; tab: Tab }) => {
         ],
       }[type]
 
+  const limitOrderValue = {
+    [Type.BUY]: times(target, amount1),
+    [Type.SELL]: times(target, amount2),
+  }[type]
+
+  const isLimitOrderValueEnough = gt(limitOrderValue, 1e6)
+
+  const limitOrderMessages = !target
+    ? [`${targetLabel} price is required`]
+    : !isLimitOrderValueEnough
+    ? ["Order value must be greater than 1 UST"]
+    : undefined
+
   const messages = simulating
     ? undefined
     : error
     ? ["Simulation failed"]
-    : isLimitOrder && !target
-    ? [`${targetLabel} price is required`]
+    : isLimitOrder
+    ? limitOrderMessages
     : undefined
 
   const disabled = invalid || simulating || !!messages?.length
