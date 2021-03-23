@@ -69,9 +69,9 @@ const Orders = ({ loading, dataSource, total, more }: Props) => {
               align: "center",
             },
             {
-              key: "asset",
-              title: "Order Amount",
-              render: ({ amount, symbol }) => formatAsset(amount, symbol),
+              key: "terraswapPrice",
+              title: "Terraswap Price",
+              render: (value) => `${format(value)} ${UST}`,
               align: "right",
             },
             {
@@ -81,9 +81,9 @@ const Orders = ({ loading, dataSource, total, more }: Props) => {
               align: "right",
             },
             {
-              key: "terraswapPrice",
-              title: "Terraswap Price",
-              render: (value) => `${format(value)} ${UST}`,
+              key: "asset",
+              title: "Order Amount",
+              render: ({ amount, symbol }) => formatAsset(amount, symbol),
               align: "right",
             },
             {
