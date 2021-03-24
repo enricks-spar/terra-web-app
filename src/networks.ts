@@ -8,7 +8,7 @@ const networks: Record<string, LocalNetworkConfig> = {
       bsc: "terra1g6llg3zed35nd3mh9zx6n64tfw3z67w2c48tn2",
     },
     limitOrder: "terra1zpr8tq3ts96mthcdkukmqq4y9lhw0ycevsnw89",
-    fee: { gasPrice: 0.0015, amount: 1000 }, // 0.001000 UST
+    fee: { gasPrice: 0.15, amount: 100000 }, // 0.1 UST
   },
   testnet: {
     contract: "https://whitelist.mirror.finance/tequila.json",
@@ -19,7 +19,7 @@ const networks: Record<string, LocalNetworkConfig> = {
       bsc: "terra1paav7jul3dzwzv78j0k59glmevttnkfgmgzv2r",
     },
     limitOrder: "terra1vc4ch0z3n6c23f9uywzy5yqaj2gmpnam8qgge7",
-    fee: { gasPrice: 0.15, amount: 150000 }, // 0.150000 UST
+    fee: { gasPrice: 0.15, amount: 150000 }, // 0.15 UST
   },
   moonshine: {
     contract: "https://whitelist.mirror.finance/moonshine.json",
@@ -29,7 +29,7 @@ const networks: Record<string, LocalNetworkConfig> = {
       ethereum: "",
       bsc: "",
     },
-    fee: { gasPrice: 0.15, amount: 150000 }, // 0.150000 UST
+    fee: { gasPrice: 0.15, amount: 150000 }, // 0.15 UST
   },
 }
 
