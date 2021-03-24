@@ -123,9 +123,9 @@ const useParseTx = ({ type, data, token }: Tx) => {
       ],
       SELL: [
         "Sold",
-        formatToken(bidderReceiveLimitOrder),
-        "for",
         formatToken(executorReceiveLimitOrder),
+        "for",
+        formatToken(bidderReceiveLimitOrder),
       ],
     }[limitOrderType],
     CANCEL_LIMIT_ORDER: ["Canceled limit order ID", data.orderId],
