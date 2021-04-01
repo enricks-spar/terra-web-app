@@ -121,12 +121,7 @@ const Holdings = ({ loading, totalValue, dataSource }: Props) => {
                           children: MenuKey.SEND,
                         },
                       ]
-                    : [
-                        {
-                          to: { pathname: getPath(MenuKey.BURN) },
-                          children: MenuKey.BURN,
-                        },
-                      ]
+                    : [{ to: `/burn/${token}`, children: MenuKey.BURN }]
 
                 return <DashboardActions list={list} />
               },

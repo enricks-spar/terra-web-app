@@ -60,7 +60,7 @@ export const menu: Dictionary<RouteProps> = {
   [MenuKey.MY]: { path: "/my", component: My },
   [MenuKey.TRADE]: { path: "/trade", component: Trade },
   [MenuKey.MINT]: { path: "/mint", component: Mint },
-  [MenuKey.BURN]: { path: "/burn", component: Burn },
+  [MenuKey.BURN]: { path: "/burn/:token", component: Burn },
   [MenuKey.POOL]: { path: "/pool", component: Pool },
   [MenuKey.STAKE]: { path: "/stake", component: Stake },
   [MenuKey.GOV]: { path: "/gov", component: Gov },
