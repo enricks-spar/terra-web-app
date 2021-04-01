@@ -22,11 +22,12 @@ const Burn = () => {
 
   const cdps = useCDPS(token)
   const positions = gt(balance, 0) && cdps && findPositions(balance, cdps)
-  console.log(positions)
 
   return (
     <Page title={MenuKey.BURN} doc="/user-guide/getting-started/mint-and-burn">
-      {token && <BurnForm tab={tab} />}
+      {token && positions && (
+        <BurnForm tab={tab} token={token} positions={positions} />
+      )}
     </Page>
   )
 }

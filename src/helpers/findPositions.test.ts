@@ -2,8 +2,13 @@ import findPositions from "./findPositions"
 
 test("findPositions", () => {
   expect(ids(findPositions("5000000", cdps))).toEqual(["254"])
+  expect(findPositions("5000000", cdps)[0].mintAmount).toEqual("5000000")
+
   expect(ids(findPositions("9613905", cdps))).toEqual(["254"])
+
   expect(ids(findPositions("10000000", cdps))).toEqual(["254", "240"])
+  expect(findPositions("10000000", cdps)[1].mintAmount).toEqual("386095")
+
   expect(ids(findPositions("49558377", cdps))).toEqual(sortedAll)
 })
 
