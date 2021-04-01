@@ -33,6 +33,10 @@ const useMyMint = () => {
             yesterday: yesterday[collateral.token],
           })
 
+          const collateralDelisted =
+            collateral.token !== UUSD &&
+            whitelist[collateral.token]["status"] === "DELISTED"
+
           /* asset */
           const asset = parseToken(position.asset)
           const assetPrice = find(priceKey, asset.token)
@@ -41,6 +45,8 @@ const useMyMint = () => {
             today: assetPrice,
             yesterday: yesterday[asset.token],
           })
+
+          const assetDelisted = whitelist[asset.token]["status"] === "DELISTED"
 
           /* ratio */
           const minRatio = find(AssetInfoKey.MINCOLLATERALRATIO, asset.token)
@@ -53,23 +59,26 @@ const useMyMint = () => {
           const danger = lt(minus(ratio, minRatio), DANGER)
           const warning = !danger && lte(minus(ratio, minRatio), WARNING)
 
+          /* status */
+          const status: ListedItemStatus =
+            collateralDelisted || assetDelisted ? "DELISTED" : "LISTED"
+
           return {
             ...position,
+            status,
             collateral: {
               ...collateral,
               price: collateralPrice,
               value: collateralValue,
               change: collateralChange,
-              delisted:
-                collateral.token !== UUSD &&
-                whitelist[collateral.token]["status"] === "DELISTED",
+              delisted: collateralDelisted,
             },
             asset: {
               ...asset,
               price: assetPrice,
               value: assetValue,
               change: assetChange,
-              delisted: whitelist[asset.token]["status"] === "DELISTED",
+              delisted: assetDelisted,
             },
             ratio,
             minRatio,
