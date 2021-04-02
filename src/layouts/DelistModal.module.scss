@@ -1,0 +1,6 @@
+@import "mixins";
+
+.info {
+  @include flex;
+  font-size: 2rem;
+}
