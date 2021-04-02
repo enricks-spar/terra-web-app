@@ -26,7 +26,7 @@ const Burn = () => {
   return (
     <Page
       title={MenuKey.BURN}
-      doc="/protocol/mirrored-assets-massets#deprecation-and-migration "
+      doc="/protocol/mirrored-assets-massets#deprecation-and-migration"
     >
       {token && positions && (
         <BurnForm tab={tab} token={token} positions={positions} />
