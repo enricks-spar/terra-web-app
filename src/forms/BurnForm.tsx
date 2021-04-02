@@ -27,7 +27,7 @@ const BurnForm = ({ tab, token, positions }: Props) => {
   const priceKey = PriceKey.ORACLE
 
   /* context */
-  const { contracts, getSymbol } = useContractsAddress()
+  const { contracts, getSymbol, toToken } = useContractsAddress()
   const { find } = useContract()
 
   const list = positions.map((item) => {
@@ -64,7 +64,9 @@ const BurnForm = ({ tab, token, positions }: Props) => {
     send: { amount, contract: contracts["mint"], msg: toBase64(msg) },
   })
 
-  const getData = ({ id, mintAmount, collateral }: PositionItem) => {
+  const getData = ({ id, mintAmount, ...item }: PositionItem) => {
+    const { collateral: amount, collateralToken } = item
+    const collateral = toToken({ amount, token: collateralToken })
     const withdraw = { withdraw: { position_idx: id, collateral } }
     const burn = { burn: { position_idx: id } }
 
