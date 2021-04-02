@@ -1,6 +1,5 @@
 import { groupBy } from "ramda"
 import BigNumber from "bignumber.js"
-import { Msg } from "@terra-money/terra.js"
 
 import { formatAsset } from "../libs/parse"
 import { sum } from "../libs/math"
@@ -27,7 +26,7 @@ const BurnForm = ({ tab, token, positions }: Props) => {
   const priceKey = PriceKey.ORACLE
 
   /* context */
-  const { contracts, getSymbol, toToken } = useContractsAddress()
+  const { contracts, getSymbol } = useContractsAddress()
   const { find } = useContract()
 
   const list = positions.map((item) => {
@@ -64,19 +63,12 @@ const BurnForm = ({ tab, token, positions }: Props) => {
     send: { amount, contract: contracts["mint"], msg: toBase64(msg) },
   })
 
-  const getData = ({ id, mintAmount, ...item }: PositionItem) => {
-    const { collateral: amount, collateralToken } = item
-    const collateral = toToken({ amount, token: collateralToken })
-    const withdraw = { withdraw: { position_idx: id, collateral } }
+  const getData = ({ id, mintAmount }: CDP) => {
     const burn = { burn: { position_idx: id } }
-
-    return [
-      newContractMsg(token, createSend(burn, mintAmount)),
-      newContractMsg(contracts["mint"], withdraw),
-    ]
+    return newContractMsg(token, createSend(burn, mintAmount))
   }
 
-  const data = list.reduce<Msg[]>((acc, cur) => [...acc, ...getData(cur)], [])
+  const data = list.map(getData)
 
   /* result */
   const parseTx = useBurnReceipt()
