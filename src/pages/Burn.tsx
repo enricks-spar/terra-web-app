@@ -24,7 +24,10 @@ const Burn = () => {
   const positions = gt(balance, 0) && cdps && findPositions(balance, cdps)
 
   return (
-    <Page title={MenuKey.BURN} doc="/user-guide/getting-started/mint-and-burn">
+    <Page
+      title={MenuKey.BURN}
+      doc="/protocol/mirrored-assets-massets#deprecation-and-migration "
+    >
       {token && positions && (
         <BurnForm tab={tab} token={token} positions={positions} />
       )}
